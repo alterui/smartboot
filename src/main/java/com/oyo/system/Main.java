@@ -13,8 +13,8 @@ import java.security.cert.X509Certificate;
  */
 public class Main {
     public static void main(String[] args) {
-        File file = new File("/Users/oyo/Documents/book/test.txt");
-        File file1 = new File("/Users/oyo/Documents/book/test1.txt");
+        File file = new File("C:\\myData\\lock\\client.exe");
+        File file1 = new File("C:\\lock2\\client.exe");
         String fileMD5 = getFileMD5(file);
         System.out.println(fileMD5);
 
