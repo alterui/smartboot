@@ -13,13 +13,17 @@ import java.security.cert.X509Certificate;
  */
 public class Main {
     public static void main(String[] args) {
-        File file = new File("/Users/oyo/Documents/book/Java编程思想.pdf");
-        File file1 = new File("/Users/oyo/Documents/book1/Java编程思想.pdf");
+        File file = new File("/Users/oyo/Documents/book/test.txt");
+        File file1 = new File("/Users/oyo/Documents/book/test1.txt");
         String fileMD5 = getFileMD5(file);
         System.out.println(fileMD5);
 
         String fileMD51 = getFileMD5(file1);
         System.out.println(fileMD51);
+
+        System.out.println("文件1的长度："+file.length());
+        System.out.println("文件2的长度："+file1.length());
+
     }
 
 
