@@ -27,9 +27,12 @@ public class Main {
     }
 
 
-    // 计算文件的 MD5 值
+    /**
+     * 计算文件md5值
+     * @param file
+     * @return
+     */
     public static String getFileMD5(File file) {
-
         if (!file.isFile()) {
             return null;
         }

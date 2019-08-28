@@ -11,7 +11,7 @@ import java.nio.channels.FileChannel;
 public class CopyFile {
     public static void main(String[] args) {
         File sourceFile = new File("C:\\myData\\lock\\client.exe");
-        File destFile = new File("C:\\lock3\\client.exe");
+        File destFile = new File("C:\\lock4\\client.exe");
 
         long beforeTime = System.currentTimeMillis();
 
@@ -21,7 +21,6 @@ public class CopyFile {
     }
 
     public static void copyFile(File source, File dest) {
-
         if (!dest.exists()) {
             dest.getParentFile().mkdir();
             try {
@@ -35,6 +34,7 @@ public class CopyFile {
         try {
             inputChannel = new FileInputStream(source).getChannel();
             outputChannel = new FileOutputStream(dest).getChannel();
+
 
             outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
 
