@@ -1,6 +1,8 @@
 package com.oyo.update;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author liurui
@@ -10,9 +12,15 @@ public class FileTest {
 
         public static void main(String[] args) {
 
-            getFileAbsolutePath(new File("/Users/oyo/Downloads/picture"));
+            List<String> fileAbsolutePath = getFileAbsolutePath(new File("/Users/oyo/Downloads/picture"));
+
+            fileAbsolutePath.forEach(System.out::println);
+            String s = fileAbsolutePath.get(0);
+            File file = new File(s);
+            System.out.println(file.getName());
         }
-        public static void getFileAbsolutePath(File file){
+        public static List<String > getFileAbsolutePath(File file){
+            List<String> list = new ArrayList();
             if (file.exists()) {
                 File[] files = file.listFiles();
                 if (files==null ) {
@@ -20,16 +28,18 @@ public class FileTest {
                 } else {
                     for (File fileName : files) {
                         if (fileName.isDirectory()) {
-                            System.out.println("文件夹:" + fileName.getPath());
+                           // System.out.println("文件夹:" + fileName.getPath());
                             getFileAbsolutePath(fileName);
                         } else {
-                            System.out.println("文件:" + fileName.getPath());
+                            //System.out.println("文件:" + fileName.getPath());
+                            list.add(fileName.getPath());
                         }
                     }
                 }
             } else {
-                System.out.println("文件不存在!");
+                return null;
             }
+            return list;
         }
 
 
