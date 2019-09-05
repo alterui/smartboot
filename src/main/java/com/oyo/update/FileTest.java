@@ -9,6 +9,7 @@ import java.util.List;
  * @date 2019/9/5 17:36
  */
 public class FileTest {
+        static List<String> list = new ArrayList();
 
         public static void main(String[] args) {
 
@@ -20,7 +21,7 @@ public class FileTest {
             System.out.println(file.getName());
         }
         public static List<String > getFileAbsolutePath(File file){
-            List<String> list = new ArrayList();
+
             if (file.exists()) {
                 File[] files = file.listFiles();
                 if (files==null ) {
@@ -28,7 +29,8 @@ public class FileTest {
                 } else {
                     for (File fileName : files) {
                         if (fileName.isDirectory()) {
-                           // System.out.println("文件夹:" + fileName.getPath());
+                           //System.out.println("文件夹:" + fileName.getPath());
+                            //list.add(fileName.getPath());
                             getFileAbsolutePath(fileName);
                         } else {
                             //System.out.println("文件:" + fileName.getPath());
