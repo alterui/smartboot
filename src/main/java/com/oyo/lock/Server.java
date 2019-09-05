@@ -21,9 +21,9 @@ public class Server {
 
 
         // 1
-        AioQuickServer<String> server = new AioQuickServer<String>(8080, new StringProtocol(), new MessageProcessor<String>() {
+        AioQuickServer<String> server = new AioQuickServer<String>(8081, new StringProtocol(), new MessageProcessor<String>() {
             public void process(AioSession<String> session, String msg) {
-                System.out.println("接受到客户端消息:" + msg);
+                System.out.println("1111111111接受到客户端消息:" + msg);
 
                 byte[] response = "Hi Client!".getBytes();
                 byte[] head = {(byte) response.length};
