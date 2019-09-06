@@ -40,15 +40,17 @@ public class BuildXml {
                 Element  file = document.createElement("file");
                 file.setAttribute("id", String.valueOf(i+1));
 
-                // 添加子节点
-                Element filePathName = document.createElement("filePath");
-                filePathName.setTextContent(fileAbsolutePath.get(i));
-                file.appendChild(filePathName);
 
                 // 添加子节点
                 Element fileName = document.createElement("fileName");
                 fileName.setTextContent(new File(fileAbsolutePath.get(i)).getName());
                 file.appendChild(fileName);
+
+                // 添加子节点
+                Element filePathName = document.createElement("filePath");
+                filePathName.setTextContent(fileAbsolutePath.get(i).substring(fileAbsolutePath.get(i).indexOf(source.getName()),fileAbsolutePath.get(i).length()));
+                file.appendChild(filePathName);
+
 
                 // 添加子节点
                 Element fileMD5Code = document.createElement("fileMD5Code");
@@ -85,6 +87,6 @@ public class BuildXml {
     }
 
     public static void main(String[] args) {
-        createXMLByDOM(new File("/Users/oyo/Downloads/1.0.2"),new File("/Users/oyo/Downloads/1.0.2/file.xml"));
+        createXMLByDOM(new File("/Users/oyo/Downloads/1.0.2"),new File("/Users/oyo/workspace/smartboot/src/main/java/com/oyo/update/file.xml"));
     }
 }
