@@ -20,10 +20,8 @@ public class BuildXml {
         // 创建DocumentBuilderFactory
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
-
             // 创建DocumentBuilder
             DocumentBuilder builder = factory.newDocumentBuilder();
-
             // 创建Document
             Document document = builder.newDocument();
 
@@ -67,16 +65,12 @@ public class BuildXml {
             /**
              * 生成XML文件
              */
-
             // 创建TransformerFactory对象
             TransformerFactory tff = TransformerFactory.newInstance();
-
             // 创建Transformer对象
             Transformer tf = tff.newTransformer();
-
             // 设置输出数据时换行
             tf.setOutputProperty(OutputKeys.INDENT, "yes");
-
             // 使用Transformer的transform()方法将DOM树转换成XML
             tf.transform(new DOMSource(document), new StreamResult(target));
 
