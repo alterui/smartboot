@@ -1,9 +1,6 @@
 package com.oyo.update;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
 import java.security.MessageDigest;
@@ -88,6 +85,48 @@ public class FileUtils {
             }
         }
 
+    }
+
+
+    /**
+     * 复制一个目录及其子目录、文件到另外一个目录
+     * @param source
+     * @param target
+     * @throws IOException
+     */
+    public static void copyFolder(File source, File target) throws IOException {
+        if (source.isDirectory()) {
+            if (!target.exists()) {
+                target.mkdir();
+            }
+            String files[] = source.list();
+            for (String file : files) {
+
+                File srcFile = new File(source, file);
+                File destFile = new File(target, file);
+                // 递归复制
+                copyFolder(srcFile, destFile);
+            }
+        } else {
+            InputStream in = new FileInputStream(source);
+            OutputStream out = new FileOutputStream(target);
+
+            byte[] buffer = new byte[1024];
+
+            int length;
+
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
+            }
+            in.close();
+            out.close();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        File file1 = new File("/Users/oyo/Downloads/1.0.3");
+        File file2 = new File("/Users/oyo/Downloads/1.0.4");
+        copyFolder(file1,file2);
     }
 
 }
