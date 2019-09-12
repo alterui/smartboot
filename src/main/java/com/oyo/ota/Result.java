@@ -18,5 +18,9 @@ public class Result implements Serializable{
         return data.getMtOrderId();
     }
 
+    public String getName() {
+        return data.getUserName();
+    }
+
 
 }

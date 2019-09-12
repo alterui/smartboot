@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import java.util.List;
 import java.util.Map;
@@ -102,7 +103,6 @@ public class Application {
                 "}";
 
 
-
         String json4 = "{\n" +
                 "\"historyBillTableType\":1,\n" +
                 "\"data\":\n" +
@@ -160,21 +160,31 @@ public class Application {
 
         for (Map.Entry<String, List<Result>> entry : map.entrySet()) {
             //System.out.println(entry.getKey()+entry.getValue());
-            System.out.println(entry.getKey()+"====="+entry.getValue());
-        }
+            //System.out.println(entry.getKey()+"====="+entry.getValue());
+            List<Result> results = entry.getValue();
+            Result result = results.get(0);
 
+
+            List<String> names = results.stream().map(Result::getName).distinct().collect(Collectors.toList());
+            if (names.size() > 1) {
+                //表明是拆单的
+                names.forEach(System.out::println);
+            }
+
+
+        }
 
 
         ObjectMapper mapper = new ObjectMapper();
 
-        Result s = mapper.readValue(json,Result.class);
+        Result s = mapper.readValue(json, Result.class);
 
 //        s.getData().getAccount();
 //
 //        String s1 = mapper.writeValueAsString(s);
 
-       // System.out.println(s);
-       // System.out.println(s1);
+        // System.out.println(s);
+        // System.out.println(s1);
 
 
     }
