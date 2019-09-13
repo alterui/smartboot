@@ -12,15 +12,23 @@ public class DataMei {
     private String checkInOutTime;
     private String roomType;
     private String userName;
-    private String quantity;
-    private String mtIncome;
-    private String partnerIncome;
+    private Integer quantity;
+    private Double mtIncome;
+    private Double partnerIncome;
     private String settleStatus;
     private String settleStatusMsg;
     private String packType;
-    private int hotelId;
+    private Integer hotelId;
     private String account;
-    private String il;
+
+    private Double partnerBearPreferential;
+    private String preName;
+    private String preId;
+    private String sourceOrderId;
+    private String confirmationId;
+
+    private Double partnerBearRefund;
+    private Double totalOrderIncome;
 
 
 }
