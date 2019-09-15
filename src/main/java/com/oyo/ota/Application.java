@@ -39,6 +39,27 @@ public class Application {
                 "    }\n" +
                 "}";
 
+        String json7 = "{\n" +
+                "\"historyBillTableType\":1,\n" +
+                "\"data\":\n" +
+                "\t{\n" +
+                "      \"id\": \"483666555785839905\",\n" +
+                "      \"poiName\": \"海中园主题酒店\",\n" +
+                "      \"mtOrderId\": \"2846275070786370207\",\n" +
+                "      \"checkInOutTime\": \"2019-08-26~2019-08-27\",\n" +
+                "      \"roomType\": \"迷你大床房\",\n" +
+                "      \"userName\": \"邓俊\",\n" +
+                "      \"quantity\": \"1\",\n" +
+                "      \"mtIncome\": \"11.76\",\n" +
+                "      \"partnerIncome\": \"86.24\",\n" +
+                "      \"settleStatus\": \"CONFIRMED\",\n" +
+                "      \"settleStatusMsg\": \"已确认\",\n" +
+                "      \"packType\": \"非打包\",\n" +
+                "      \"hotelId\":124,\n" +
+                "      \"account\":\"23\"\n" +
+                "    }\n" +
+                "}";
+
         String json2 = "{\n" +
                 "\"historyBillTableType\":2,\n" +
                 "\"data\":\n" +
@@ -132,6 +153,7 @@ public class Application {
 
         jsons.add(json1);
         jsons.add(json3);
+        jsons.add(json7);
 //        jsons.add(json3);
 //        jsons.add(json4);
         //jsons.add(json5);
@@ -181,59 +203,63 @@ public class Application {
             //取出(多人订单，退单，优惠单)共同的属性
 
             //表明退款或者有优惠、或者多人订单
-            if (results.size() > 1) {
+            //if (results.size() > 1) {
 
-                List<String> names = results.stream().map(Result::getName).distinct().collect(Collectors.toList());
-                //表明是多人订单
-                if (names.size() > 1) {
-                    //表明是拆单的,可能有优惠和退单
-                    System.out.println("=======多人订单======");
-                    for (Result result : results) {
-                        System.out.println(result);
-                    }
-                    //names.forEach(System.out::println);
-                } else {
-                    //表明是单人订单，出现优惠或者退单
-                    //names.forEach(System.out::print);
-                    for (Result result : results) {
-                        /**
-                         * result有很多个，
-                         */
-                        //表明退款，即为逆向订单
-                        if (result.getHistoryBillTableType() == 2) {
-                            upright = false;
-                            lossMtIncome += result.getData().getMtIncome();
-                            partnerBearRefund += result.getData().getPartnerBearRefund();
-                        } else {
-                            //1、3
-                            if (result.getHistoryBillTableType() == 1) {
-                                //System.out.println(result.getData().getPartnerIncome());
-                                partnerIncome += result.getData().getPartnerIncome();
-                                upMtIncome += result.getData().getMtIncome();
-                            }
-
-                            if (result.getHistoryBillTableType() == 3) {
-                                partnerBearPreferential += result.getData().getPartnerBearPreferential();
-                            }
-                        }
-                        // result.getData().getIl();
-                    }
-
+            List<String> names = results.stream().map(Result::getName).distinct().collect(Collectors.toList());
+            //表明是多人订单
+            if (names.size() > 1) {
+                //表明是拆单的,可能有优惠和退单
+                System.out.println("=======多人订单======");
+                for (Result result : results) {
+                    System.out.println(result);
                 }
+                //names.forEach(System.out::println);
             } else {
-                //单人订单，没有优惠,没有退款
-                System.out.println("单人订单，没有优惠");
+                //表明是单人订单，出现优惠或者退单
+                //names.forEach(System.out::print);
+
+                System.out.println("=======单人订单========");
+
+
             }
+
+            for (Result result : results) {
+                /**
+                 * result有很多个，
+                 */
+                //表明退款，即为逆向订单
+                if (result.getHistoryBillTableType() == 2) {
+                    upright = false;
+                    lossMtIncome += result.getData().getMtIncome();
+                    partnerBearRefund += result.getData().getPartnerBearRefund();
+                } else {
+                    //1、3
+                    if (result.getHistoryBillTableType() == 1) {
+                        //System.out.println(result.getData().getPartnerIncome());
+                        partnerIncome += result.getData().getPartnerIncome();
+                        upMtIncome += result.getData().getMtIncome();
+                    }
+
+                    if (result.getHistoryBillTableType() == 3) {
+                        partnerBearPreferential += result.getData().getPartnerBearPreferential();
+                    }
+                }
+                // result.getData().getIl();
+            }
+//            } else {
+//                //单人订单，没有优惠,没有退款
+//                System.out.println("单人订单，没有优惠");
+//            }
 
 
             if (upright == false) {
-                System.out.println("单人订单，为退单");
+                System.out.println("=======逆向订单======");
                 orderAmount = partnerBearRefund + lossMtIncome;
                 partnerIncome = partnerBearRefund + partnerBearPreferential;
                 System.out.println(orderAmount);
                 System.out.println(partnerIncome);
             } else {
-                System.out.println("单人订单，不是退单");
+                System.out.println("=======正向订单======");
                 orderAmount = partnerIncome + upMtIncome;
                 partnerIncome = partnerIncome + partnerBearPreferential;
                 System.out.println(orderAmount);
