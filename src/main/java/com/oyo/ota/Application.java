@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -152,8 +153,8 @@ public class Application {
         List<String> jsons = Lists.newArrayList();
 
         jsons.add(json1);
-        jsons.add(json3);
-        jsons.add(json7);
+        //jsons.add(json3);
+       // jsons.add(json7);
 //        jsons.add(json3);
 //        jsons.add(json4);
         //jsons.add(json5);
@@ -190,14 +191,14 @@ public class Application {
              * 去除相同的
              */
 
-            double orderAmount = 0.0;
-            double partnerIncome = 0.0;
-            double protocolAmount = 0.0;
-            double upMtIncome = 0.0;
-            double lossMtIncome = 0.0;
-            double partnerBearPreferential = 0.0;
+            BigDecimal orderAmount = BigDecimal.ZERO;
+            BigDecimal partnerIncome = BigDecimal.ZERO;
+            BigDecimal protocolAmount = BigDecimal.ZERO;
+            BigDecimal upMtIncome = BigDecimal.ZERO;
+            BigDecimal lossMtIncome = BigDecimal.ZERO;
+            BigDecimal partnerBearPreferential = BigDecimal.ZERO;
             boolean upright = true;
-            double partnerBearRefund = 0.0;
+            BigDecimal partnerBearRefund = BigDecimal.ZERO;
 
             List<Result> results = entry.getValue().stream().distinct().collect(Collectors.toList());
             //取出(多人订单，退单，优惠单)共同的属性
@@ -219,7 +220,7 @@ public class Application {
                 //names.forEach(System.out::print);
 
                 System.out.println("=======单人订单========");
-
+                System.out.println(results.get(0).getData().getUserName());
 
             }
 
@@ -230,18 +231,18 @@ public class Application {
                 //表明退款，即为逆向订单
                 if (result.getHistoryBillTableType() == 2) {
                     upright = false;
-                    lossMtIncome += result.getData().getMtIncome();
-                    partnerBearRefund += result.getData().getPartnerBearRefund();
+                    lossMtIncome =lossMtIncome.add(result.getData().getMtIncome());
+                    partnerBearRefund = partnerBearRefund.add(result.getData().getPartnerBearRefund());
                 } else {
                     //1、3
                     if (result.getHistoryBillTableType() == 1) {
                         //System.out.println(result.getData().getPartnerIncome());
-                        partnerIncome += result.getData().getPartnerIncome();
-                        upMtIncome += result.getData().getMtIncome();
+                        partnerIncome = partnerIncome.add(result.getData().getPartnerIncome());
+                        upMtIncome =upMtIncome.add(result.getData().getMtIncome());
                     }
 
                     if (result.getHistoryBillTableType() == 3) {
-                        partnerBearPreferential += result.getData().getPartnerBearPreferential();
+                        partnerBearPreferential =partnerBearPreferential.add(result.getData().getPartnerBearPreferential());
                     }
                 }
                 // result.getData().getIl();
@@ -254,14 +255,16 @@ public class Application {
 
             if (upright == false) {
                 System.out.println("=======逆向订单======");
-                orderAmount = partnerBearRefund + lossMtIncome;
-                partnerIncome = partnerBearRefund + partnerBearPreferential;
+                orderAmount = partnerBearRefund.add(lossMtIncome);
+                partnerIncome = partnerBearRefund.add(partnerBearPreferential);
                 System.out.println(orderAmount);
                 System.out.println(partnerIncome);
             } else {
                 System.out.println("=======正向订单======");
-                orderAmount = partnerIncome + upMtIncome;
-                partnerIncome = partnerIncome + partnerBearPreferential;
+
+                System.out.println("枚举==="+BillType.UP_BILL.getBillType());
+                orderAmount = partnerIncome.add(upMtIncome);
+                partnerIncome = partnerIncome.add(partnerBearPreferential);
                 System.out.println(orderAmount);
                 System.out.println(partnerIncome);
             }

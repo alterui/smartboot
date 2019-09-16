@@ -1,5 +1,7 @@
 package com.oyo.ota;
 
+import java.math.BigDecimal;
+
 /**
  * @author liurui
  * @date 2019/9/11 14:52
@@ -13,21 +15,21 @@ public class DataMei {
     private String roomType;
     private String userName;
     private Integer quantity;
-    private Double mtIncome;
-    private Double partnerIncome;
+    private BigDecimal mtIncome;
+    private BigDecimal partnerIncome;
     private String settleStatus;
     private String settleStatusMsg;
     private String packType;
     private Integer hotelId;
     private String account;
 
-    private Double partnerBearPreferential;
+    private BigDecimal partnerBearPreferential;
     private String preName;
     private String preId;
     private String sourceOrderId;
     private String confirmationId;
 
-    private Double partnerBearRefund;
+    private BigDecimal partnerBearRefund;
     private Double totalOrderIncome;
 
 

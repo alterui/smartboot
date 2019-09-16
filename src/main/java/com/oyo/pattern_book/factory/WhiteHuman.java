@@ -1,6 +1,4 @@
-package com.oyo.pattern.factory;
-
-import java.net.HttpURLConnection;
+package com.oyo.pattern_book.factory;
 
 /**
  * @author liurui

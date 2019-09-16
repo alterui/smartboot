@@ -1,4 +1,4 @@
-package com.oyo.pattern.factory;
+package com.oyo.pattern_book.factory;
 
 /**
  * @author liurui

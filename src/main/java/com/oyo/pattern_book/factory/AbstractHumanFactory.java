@@ -1,4 +1,4 @@
-package com.oyo.pattern.factory;
+package com.oyo.pattern_book.factory;
 
 /**
  * 抽象人类创建工厂
